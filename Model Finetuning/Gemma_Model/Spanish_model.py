@@ -52,7 +52,7 @@ print("\npython -m mlx_lm.lora \\")
 print("  --model mlx-community/gemma-2-2b-4bit \\")
 print("  --data ./data \\")
 print("  --train \\")
-print("  --iters 20000 \\")
+print("  --iters 17500 \\")
 print("  --batch-size 1 \\")
 print("  --learning-rate 2e-5 \\")
 print("  --rank 8 \\")
@@ -70,16 +70,11 @@ print("Loading the refined humor model...")
 model, tokenizer = load(model_path, adapter_path=adapter_path)
 
 def generate_custom_joke(word1, word2):
-    # Aggressive instruction to ensure word usage
-    prompt = (
-        f"### Instrucción:\nEscribe un chiste original en español. "
-        f"Es obligatorio que el chiste trate sobre '{word1}' y '{word2}'.\n\n"
-        f"### Entrada:\n{word1}, {word2}\n\n"
-        f"### Respuesta:\n"
-    )
+    # Match the EXACT format used in format_entry()
+    prompt = (f"<start_of_turn>user\nEscribe un chiste en español que contenga las siguientes palabras: "
+              f"{word1}, {word2}<end_of_turn>\n"
+              f"<start_of_turn>model\n")
     
-    # 3. Setup Sampler with Repetition Penalty
-    # We use temp=0.7 to allow creativity but penalty=1.1 to prevent Jaimito loops
     sampler = sample_utils.make_sampler(temp=0.7)
     if hasattr(sampler, "set_repetition_penalty"):
         sampler.set_repetition_penalty(1.1, 64)
