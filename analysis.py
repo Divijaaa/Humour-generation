@@ -75,8 +75,6 @@ for df in [qwen_clean, gemma_clean]:
     df["prompt_norm"] = df["prompt"].str.lower()
 def make_pair_key(row):
     return f"{row['lang_norm']}::{row['word_pair_norm']}::{row['prompt_norm']}"
-def make_pair_key(row):
-    return f"{row['lang_norm']}::{row['word_pair_norm']}::{row['prompt_norm']}"
 qwen_clean["pair_key"] = qwen_clean.apply(make_pair_key, axis=1)
 gemma_clean["pair_key"] = gemma_clean.apply(make_pair_key, axis=1)
 all_df = pd.concat([qwen_clean, gemma_clean], ignore_index=True)
@@ -236,8 +234,6 @@ import seaborn as sns
 
 sns.set(style="whitegrid")
 
-# Suppose contrib_data is your dataframe with contribution percentages
-# Rows = languages, Columns = components (excluding final score)
 components = ['incongruity_ai', 'wit_ai', 'cultural_fit', 'rubric_score_total']
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
@@ -597,7 +593,7 @@ delta
 # ============================================
 #Comparing Gemma Base and Final Models
 # ============================================
-!pip install pingouin
+#!pip install pingouin
 import pandas as pd
 import numpy as np
 from scipy.stats import pearsonr, norm
