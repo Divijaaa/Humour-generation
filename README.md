@@ -6,4 +6,4 @@ Model tuning: It contains two folders Gemma_Model and Qwen_model containing the 
 evaluation and analysis: Code for assessing model performance.
 
 
-data: Contains datasets for spanish,english and chinese.
+
